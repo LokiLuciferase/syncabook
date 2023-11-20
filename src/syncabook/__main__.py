@@ -5,6 +5,7 @@ from .download_files import download_files
 from .split_text import split_text
 from .sync import sync
 from .to_xhtml import textfiles_to_xhtml_files
+from .tag_xhtml import tag_xhtmls
 
 
 def main():
@@ -23,14 +24,14 @@ def main():
     parser_download.add_argument('librivox_url')
     parser_download.add_argument('output_dir')
     parser_download.add_argument(
-        '--skip-text', 
+        '--skip-text',
         action='store_true',
         dest='skip_text',
         default=False,
         help='Do not download any files from synclibrivox repository or gutenberg.org.'
     )
     parser_download.add_argument(
-        '--skip-audio', 
+        '--skip-audio',
         action='store_true',
         dest='skip_audio',
         default=False,
@@ -84,6 +85,13 @@ def main():
         )
     )
     parser_sync.add_argument('book_dir')
+
+    parser_tag = subparsers.add_parser(
+        'tag_xhtml',
+        description='Tag XHTML files with fragment IDs.'
+    )
+    parser_tag.add_argument('input_dir')
+    parser_tag.add_argument('output_dir')
 
     parser_create = subparsers.add_parser(
         'create',
@@ -153,6 +161,8 @@ def main():
             fragment_type=args.fragment_type,
             include_heading=args.include_heading,
             )
+    elif args.command == 'tag_xhtml':
+        tag_xhtmls(args.input_dir, args.output_dir)
     elif args.command == 'sync':
         sync(
             args.book_dir,

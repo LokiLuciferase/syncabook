@@ -17,6 +17,8 @@ RUN apt install -yq gcc \
 
 RUN pip install -r requirements/base.txt
 
+RUN python3 -m spacy download en_core_web_sm
+
 COPY src src
 COPY tests tests
 COPY LICENSE MANIFEST.in pytest.ini README.md setup.py ./
